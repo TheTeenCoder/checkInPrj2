@@ -27,10 +27,10 @@ const Dashboard = () => {
 
   return (
     <div className="m-2">
-      {filled && submitted ? <Redirect to={`/userqr/${Qid}`} /> : null}
+      {filled ? <Redirect to={`/userqr/${Qid}`} /> : null}
       {submitted ? (
         <div>
-          <div className=" flex flex-col m-2 content-around border-2 border-gray-300 py-6 rounded-lg space-y-2 text-center">
+          <div className=" flex flex-col m-2 content-around py-6 rounded-lg space-y-2 text-center">
             <h1 className="text-3xl">
               Hi {firstName.toUpperCase()}, {lastName.toUpperCase()}!
             </h1>

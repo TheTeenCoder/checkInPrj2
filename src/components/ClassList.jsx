@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Class from './Class'
 
 const ClassList = (props) => {
 
     return (
         <div className="m-2">
+            <h1 className="text-2xl font-bold">Classes:</h1>
             {
                 props.classes != null ? 
                     props.classes.map((element, index) => {

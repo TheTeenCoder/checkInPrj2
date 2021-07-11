@@ -28,6 +28,11 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setId("");
+    setQId("");
+    setClasses([]);
+    setFilled(false);
+    setSubmitted(false);
     if (first.trim() === "" || second.trim() === "") {
       setMsg("First Name and Last Name cannot be empty!");
       return;
@@ -41,12 +46,6 @@ const Form = () => {
         }
       )
       .then((res) => {
-        setId('')
-        setQId('')
-        setClasses([])
-        setFilled(false)
-        setSubmitted(false)
-
         const body = JSON.parse(res.data.body);
         if (!body.find_student) {
           setMsg("Cannot find student.");
@@ -68,15 +67,15 @@ const Form = () => {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-2 Center flex flex-col items-center bg-white border-2 border-gray-300 rounded-xl">
       <div id="form">
         <form onSubmit={handleSubmit}>
-          <div className=" flex  flex-col  content-around m-2 border-2 border-gray-300 px-10 py-20 rounded-lg space-y-2 text-center">
-            <label className="text-xl">Sign in.</label>
+          <div className=" flex flex-col m-2 px-10 py-20 rounded-lg space-y-2 text-center">
+            <label className="text-3xl mb-20">Check-in to SLMCS.</label>
             <input
               value={first}
               onChange={(e) => setFirst(e.target.value)}
-              className="rounded-xl border-2 border-gray-300 p-2 "
+              className="rounded-xl border-2 border-gray-300 p-2"
               placeholder="first name..."
             />
             <input
@@ -85,14 +84,14 @@ const Form = () => {
               className="rounded-xl border-2 border-gray-300 p-2"
               placeholder="last name..."
             />
-            <button className="rounded-md p-2 bg-blue-300 border-2 border-black  ">
+            <button className="rounded-md p-2 bg-blue-400 border-2 border-white text-white">
               Submit.
             </button>
             {msg ? <label className="text-xl text-red-500">{msg}</label> : null}
+            <label className="text-xs">Project made by Mark Fang.</label>
+
           </div>
         </form>
-
-        <hr />
       </div>
     </div>
   );
