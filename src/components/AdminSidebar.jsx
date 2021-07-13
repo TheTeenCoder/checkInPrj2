@@ -30,8 +30,11 @@ const AdminSidebar = () => {
   return (
     <div>
       <div className="flex flex-col items-center border-r-2 border-gray-300">
-        <h1>Admin Dashboard</h1>
-        <nav id="nav" className="mt-10 p-2 flex flex-col space-y-4 h-screen overflow-auto">
+        <h1 className="font-bold mt-10 text-xl">Admin Dashboard</h1>
+        <nav
+          id="nav"
+          className="mt-10 p-2 flex flex-col space-y-4 h-screen overflow-auto"
+        >
           {/* <button className="py-2 px-20 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-blue text-black  rounded-xl border-2 border-gray-300 shadow-lg ">
             Classes
           </button>
@@ -47,6 +50,7 @@ const AdminSidebar = () => {
                 room_no={element.room_no}
                 session={element.session}
                 id={element.class_id}
+                index={element.class_id}
                 key={element.class_id}
               />
             );
