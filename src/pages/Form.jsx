@@ -60,10 +60,12 @@ const Form = () => {
         setClasses(body.class_list);
         setId(body.student_id);
         setSubmitted(true);
-        console.log(msg, filled);
-      });
-    if (submitted) history.push("/dashboard");
 
+        console.log(msg, filled);
+      })
+      .then(() => {
+        history.push("/dashboard");
+      });
   };
 
   return (
@@ -87,7 +89,9 @@ const Form = () => {
             <button className="rounded-md p-2 bg-blue-400 border-2 border-white text-white">
               Submit.
             </button>
-            {msg ? <label className="text-md font-mono text-red-500">{msg}</label> : null}
+            {msg ? (
+              <label className="text-md font-mono text-red-500">{msg}</label>
+            ) : null}
             <label className="text-xs">Project made by Mark Fang.</label>
           </div>
         </form>
