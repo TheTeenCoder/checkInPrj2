@@ -22,7 +22,7 @@ const Form = () => {
   const [id, setId] = useAtom(idAtom);
   const [Qid, setQId] = useAtom(qIdAtom);
   const [filled, setFilled] = useAtom(filledAtom);
-  const [, setSubmitted] = useAtom(submittedAtom);
+  const [submitted, setSubmitted] = useAtom(submittedAtom);
 
   const history = useHistory();
 
@@ -57,13 +57,13 @@ const Form = () => {
           return;
         }
         console.log(body);
-        setMsg("");
         setClasses(body.class_list);
         setId(body.student_id);
         setSubmitted(true);
         console.log(msg, filled);
       });
-    history.push("/dashboard");
+    if (submitted) history.push("/dashboard");
+
   };
 
   return (
@@ -87,9 +87,8 @@ const Form = () => {
             <button className="rounded-md p-2 bg-blue-400 border-2 border-white text-white">
               Submit.
             </button>
-            {msg ? <label className="text-xl text-red-500">{msg}</label> : null}
+            {msg ? <label className="text-md font-mono text-red-500">{msg}</label> : null}
             <label className="text-xs">Project made by Mark Fang.</label>
-
           </div>
         </form>
       </div>

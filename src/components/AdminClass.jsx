@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useAtom } from "jotai";
 import { focusAtom, loadingAtom, studentsAtom, weekAtom, currentWeekAtom, classIdAtom } from "../atoms/admin";
-
+import { weekNumber } from "weeknumber";
 const AdminClass = (props) => {
   const [, setStudents] = useAtom(studentsAtom)
   const [index, setFocus] = useAtom(focusAtom);
@@ -11,6 +11,7 @@ const AdminClass = (props) => {
   const [, setId] = useAtom(classIdAtom);
 
   const handleClick = async (e) => {
+    setWeek(weekNumber())
     setFocus(props.index);
     setLoading(true)
     await axios
