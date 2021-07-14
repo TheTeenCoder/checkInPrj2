@@ -8,15 +8,17 @@ const Verify = () => {
 
     const { qr_id } = useParams();
     const [status, setStatus] = useState('');
+    const [name, setName] = useState('');
 
-    const post = () => {
-        axios.post("https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/checkin-by-qr-code",
+    const post = async () => {
+        await axios.post("https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/checkin-by-qr-code",
         {
             id: qr_id
         })
         .then(res => {
             const body = JSON.parse(res.data.body);
             setStatus(body.message)
+            setName(`${body.en_name}, ${body.cn_name}`)
         })
     }
 
@@ -30,7 +32,8 @@ const Verify = () => {
                     {
                         status ?
                         <div>
-                            {status}
+                            <h1>Student: {name}</h1>
+                            <h1>Status: {status.toUpperCase()}</h1>
                             <Check size={200} color="green" className="mt-5 block ml-auto mr-auto"/>
                         </div>
                         :
