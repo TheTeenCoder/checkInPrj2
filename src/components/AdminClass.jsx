@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useAtom } from "jotai";
-import { focusAtom, loadingAtom, studentsAtom } from "../atoms/admin";
-import classNames from "classnames";
+import { focusAtom, loadingAtom, studentsAtom, weekAtom } from "../atoms/admin";
 
 const AdminClass = (props) => {
   const [, setStudents] = useAtom(studentsAtom)
   const [index, setFocus] = useAtom(focusAtom);
   const [, setLoading] = useAtom(loadingAtom);
+  const [week, setWeek] = useAtom(weekAtom);
 
   const handleClick = async (e) => {
     setFocus(props.index);
@@ -15,7 +15,7 @@ const AdminClass = (props) => {
     await axios
       .post(
         "https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/admin/get-student-detail",
-        { class_id: props.id }
+        { class_id: props.id, week_num: week }
       )
       .then((response) => {
         console.log(response)

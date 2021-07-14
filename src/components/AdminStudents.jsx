@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import { loadingAtom, studentsAtom, weekAtom } from "../atoms/admin";
 import { Check, X } from "react-feather";
-import { BarLoader, BeatLoader, CircleLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 const AdminStudents = () => {
   const [students] = useAtom(studentsAtom);
   const [loading] = useAtom(loadingAtom);
@@ -10,7 +10,7 @@ const AdminStudents = () => {
 
   const handleWeekChange = (e) => {
     setWeek(e.target.value);
-  }
+  };
   // const renderWeeks = () => {
   //   const n = 10;
   //   [...Array(n)].map((e, i) => <span className="busterCards" key={i}>♦</span>)
@@ -25,10 +25,15 @@ const AdminStudents = () => {
         </div>
       ) : (
         <div>
-          <select className="flex items-start" onChange={handleWeekChange} value={week}>
+          <select
+            className="flex items-start"
+            onChange={handleWeekChange}
+            value={week}
+          >
+            <option value={28}>28</option>
             {[...Array(10)].map((e, i) => (
-              <option className="busterCards" value={i+1} key={i+1}>
-                Week {i+1}
+              <option className="busterCards" value={i + 1} key={i + 1}>
+                Week {i + 1}
               </option>
             ))}
           </select>
@@ -37,7 +42,9 @@ const AdminStudents = () => {
               <tr>
                 <th>#id</th>
                 <th>name</th>
-                <th>status</th>
+                <th>Submit Time</th>
+                <th>Check-in Time</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +55,8 @@ const AdminStudents = () => {
                     <td>
                       {element.en_name}, {element.cn_name}
                     </td>
+                    <td>{element.submit_time}</td>
+                    <td>{element.checkin_time}</td>
                     <td>
                       <div className="flex justify-center">
                         {element.fill_questionair ? (
