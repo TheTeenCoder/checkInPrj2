@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useAtom } from "jotai";
-import { focusAtom, loadingAtom, studentsAtom, weekAtom } from "../atoms/admin";
+import { focusAtom, loadingAtom, studentsAtom, weekAtom, currentWeekAtom, classIdAtom } from "../atoms/admin";
 
 const AdminClass = (props) => {
   const [, setStudents] = useAtom(studentsAtom)
   const [index, setFocus] = useAtom(focusAtom);
   const [, setLoading] = useAtom(loadingAtom);
   const [week, setWeek] = useAtom(weekAtom);
+  const [, setId] = useAtom(classIdAtom);
 
   const handleClick = async (e) => {
     setFocus(props.index);
@@ -21,9 +22,19 @@ const AdminClass = (props) => {
         console.log(response)
         const body = JSON.parse(response.data.body);
         setStudents(body.students)
+        setId(props.id)
       });
     setLoading(false);
   };
+
+
+  // useEffect(() => {
+  //   handleClick();
+  // }, [week, handleClick])
+
+  // useEffect(() => {
+  //   post();
+  // }, [week])
 
   var style = "cursor-pointer border-2 rounded-xl shadow-md flex flex-col p-5 hover:bg-gray-50 focus:outline-black  focus:ring-2 focus:border-blue-300 focus:outline-blue";
   if(index === props.index){
