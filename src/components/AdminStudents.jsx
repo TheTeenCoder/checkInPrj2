@@ -22,8 +22,10 @@ const AdminStudents = (props) => {
   useEffect(() => {
     setCurrentWeek(weekNumber());
   }, []);
-  const post = (week_no) => {
-    axios
+
+  const post = async (week_no) => {
+    console.log("AdminStudents" + week_no);
+    await axios
       .post(
         "https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/admin/get-student-detail",
         { class_id: id, week_num: week_no }
@@ -37,6 +39,7 @@ const AdminStudents = (props) => {
   const handleWeekChange = (e) => {
     setWeek(e.target.value);
     //console.log("week=" + e.target.value);
+
     post(e.target.value);
   };
 
