@@ -26,8 +26,10 @@ const Form = () => {
 
   const history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    var foundStudent = true;
+
     setId("");
     setQId("");
     setClasses([]);
@@ -37,7 +39,7 @@ const Form = () => {
       setMsg("First Name and Last Name cannot be empty!");
       return;
     }
-    axios
+    await axios
       .post(
         "https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/student",
         {
@@ -49,6 +51,7 @@ const Form = () => {
         const body = JSON.parse(res.data.body);
         if (!body.find_student) {
           setMsg("Cannot find student.");
+          foundStudent = false;
           return;
         }
         if (body.already_filled_questionaire) {
@@ -62,10 +65,9 @@ const Form = () => {
         setSubmitted(true);
 
         console.log(msg, filled);
-      })
-      .then(() => {
-        history.push("/dashboard");
       });
+      if(!foundStudent) return ;
+      history.push("/dashboard");
   };
 
   return (
