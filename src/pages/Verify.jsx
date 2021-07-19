@@ -15,7 +15,8 @@ const Verify = () => {
 
   const renderStatus = () => {
     switch (status) {
-      case -1 || -2:
+      case -1:
+      case -2:
         return (
           <div>
             <h1 className="text-red-500">{msg}</h1>
@@ -53,7 +54,7 @@ const Verify = () => {
         const body = JSON.parse(res.data.body);
         setMsg(body.message);
         setStatus(body.status);
-
+        console.log(body);
         setName(`${body.en_name}, ${body.cn_name}`);
       });
     setLoading(false);
