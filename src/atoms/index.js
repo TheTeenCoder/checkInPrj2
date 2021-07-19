@@ -7,3 +7,5 @@ export const qIdAtom = atom("");
 export const idAtom = atom("");
 export const filledAtom = atom(false);
 export const submittedAtom = atom(false);
+export const submittedTimeAtom = atom(null);
+export const checkinTimeAtom = atom(null);

@@ -10,11 +10,16 @@ import {
   firstNameAtom,
   lastNameAtom,
   submittedAtom,
+  submittedTimeAtom,
+  checkinTimeAtom,
 } from "../atoms/index";
 
 const Form = () => {
   const [first, setFirst] = useAtom(firstNameAtom);
   const [second, setSecond] = useAtom(lastNameAtom);
+  const [, setSubmittedTime] = useAtom(submittedTimeAtom);
+  const [checkinTime, setCheckinTime] = useAtom(checkinTimeAtom);
+
   const [msg, setMsg] = useState("");
 
   //jotai atoms ->
@@ -26,7 +31,7 @@ const Form = () => {
 
   const history = useHistory();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     var foundStudent = true;
 
@@ -35,11 +40,13 @@ const Form = () => {
     setClasses([]);
     setFilled(false);
     setSubmitted(false);
+    setCheckinTime(null);
+
     if (first.trim() === "" || second.trim() === "") {
       setMsg("First Name and Last Name cannot be empty!");
       return;
     }
-    await axios
+    axios
       .post(
         "https://g5dckfl5sh.execute-api.us-east-2.amazonaws.com/dev/student",
         {
@@ -49,25 +56,33 @@ const Form = () => {
       )
       .then((res) => {
         const body = JSON.parse(res.data.body);
+
         if (!body.find_student) {
+          console.log("+++++++" + body.find_student);
           setMsg("Cannot find student.");
           foundStudent = false;
+          console.log(foundStudent);
           return;
+        } else {
+          //find student in request
+          if (body.already_filled_questionaire) {
+            setQId(body.questionaire_id);
+            setFilled(true);
+            setSubmittedTime(body.submit_time);
+            if (body.checkin_time) {
+              setCheckinTime(body.checkin_time);
+            }
+            history.push("/dashboard");
+            return;
+          } else {
+            //stduent not submit questionaire yet
+            setClasses(body.class_list);
+            setId(body.student_id);
+            setSubmitted(true);
+            history.push("/dashboard");
+          }
         }
-        if (body.already_filled_questionaire) {
-          setQId(body.questionaire_id);
-          setFilled(true);
-          return;
-        }
-        console.log(body);
-        setClasses(body.class_list);
-        setId(body.student_id);
-        setSubmitted(true);
-
-        console.log(msg, filled);
       });
-      if(!foundStudent) return ;
-      history.push("/dashboard");
   };
 
   return (
