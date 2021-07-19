@@ -7,9 +7,38 @@ import { BeatLoader } from "react-spinners";
 
 const Verify = () => {
   const { qr_id } = useParams();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(0);
+  const [msg, setMsg] = useState("");
+
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const renderStatus = () => {
+    switch (status) {
+      case -1 || -2:
+        return (
+          <div>
+            <h1 className="text-red-500">{msg}</h1>
+          </div>
+        );
+      case 1:
+        return (
+          <div>
+            <div>
+              <h1>Student: {name}</h1>
+              <h1>Message: {msg.toUpperCase()}</h1>
+              <Check
+                size={200}
+                color="green"
+                className="mt-5 block ml-auto mr-auto"
+              />
+            </div>
+          </div>
+        );
+      default:
+        return <h1>Error.</h1>;
+    }
+  };
 
   const post = async () => {
     setLoading(true);
@@ -22,7 +51,9 @@ const Verify = () => {
       )
       .then((res) => {
         const body = JSON.parse(res.data.body);
-        setStatus(body.message);
+        setMsg(body.message);
+        setStatus(body.status);
+
         setName(`${body.en_name}, ${body.cn_name}`);
       });
     setLoading(false);
@@ -35,24 +66,7 @@ const Verify = () => {
   return (
     <div className="m-2">
       <div className=" flex  flex-col px-10 py-20 rounded-lg space-y-2 text-center ">
-        {loading ? (
-          <BeatLoader />
-        ) : status ? (
-          <div>
-            <h1>Student: {name}</h1>
-            <h1>Status: {status.toUpperCase()}</h1>
-            <Check
-              size={200}
-              color="green"
-              className="mt-5 block ml-auto mr-auto"
-            />
-          </div>
-        ) : (
-          <h1 className="text-red-500">
-            *The id you entered does not work. You have been reported to the
-            server as a potential threat.
-          </h1>
-        )}
+        {loading ? <BeatLoader /> : <div>{renderStatus()}</div>}
       </div>
     </div>
   );
