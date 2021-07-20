@@ -11,6 +11,7 @@ import { Check, X } from "react-feather";
 import { BeatLoader } from "react-spinners";
 import { weekNumber } from "weeknumber";
 import axios from "axios";
+import { firstNameAtom } from "../atoms";
 const AdminStudents = (props) => {
   const [students, setStudents] = useAtom(studentsAtom);
   const [loading] = useAtom(loadingAtom);
@@ -47,22 +48,23 @@ const AdminStudents = (props) => {
     var curr = new Date(); // get current date
     var first = curr.getDate() - curr.getDay() + 1; // Monday is the first day
     var last = first + 6; // last day is the first day + 6
-
     var firstday = new Date(curr.setDate(first)).toISOString().split("T")[0];
     var lastday = new Date(curr.setDate(last)).toISOString().split("T")[0];
     return firstday + " TO " + lastday;
   };
-  // const renderWeeks = () => {
-  //   const n = 10;
-  //   [...Array(n)].map((e, i) => <span className="busterCards" key={i}>♦</span>)
 
-  // };
+  function getDateOfWeek(w) {
+    var first = 1 + (w - 1) * 7 + 3; // 1st of January + 7 days for each week
+    var last = 1 + (w - 1) * 7 + 7 + 2;
+    
+    return new Date(new Date().getFullYear(), 0, first).toLocaleString().split(',')[0] + " to "+new Date(new Date().getFullYear(), 0, last).toLocaleString().split(',')[0];
+  }
 
   return (
     <div className="items-center text-center p-5">
       {loading ? (
         <div className=" flex flex-col items-center ">
-          <BeatLoader color="blue" loading={loading} />
+          <BeatLoader color="blue" loading={true} />
         </div>
       ) : (
         <div>
@@ -79,7 +81,7 @@ const AdminStudents = (props) => {
               currentWeek - 4,
             ].map((e, i) => (
               <option className="busterCards" value={e} key={e}>
-                Week {e} ({start_end_date_of_week_number(e)})
+                Week {e} ({getDateOfWeek(e)})
               </option>
             ))}
           </select>
