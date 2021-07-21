@@ -71,7 +71,7 @@ const QR = () => {
     if (!submittedTime && !checkinTime) {
       return (
         <div className="flex flex-col items-left space-y-2">
-          {displayQrCode()}{" "}
+          {displayQrCode()}=
         </div>
       );
     }

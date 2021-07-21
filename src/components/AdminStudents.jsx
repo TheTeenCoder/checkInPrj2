@@ -24,6 +24,20 @@ const AdminStudents = (props) => {
     setCurrentWeek(weekNumber());
   }, []);
 
+  const convertTime = (dateStr) => {
+    let date = new Date(Date.parse(dateStr));
+    var newDate = new Date(
+      date.getTime() + date.getTimezoneOffset() * 60 * 1000
+    );
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate.toLocaleString();
+  };
+
   const post = async (week_no) => {
     console.log("AdminStudents" + week_no);
     await axios
@@ -56,8 +70,14 @@ const AdminStudents = (props) => {
   function getDateOfWeek(w) {
     var first = 1 + (w - 1) * 7 + 3; // 1st of January + 7 days for each week
     var last = 1 + (w - 1) * 7 + 7 + 2;
-    
-    return new Date(new Date().getFullYear(), 0, first).toLocaleString().split(',')[0] + " to "+new Date(new Date().getFullYear(), 0, last).toLocaleString().split(',')[0];
+
+    return (
+      new Date(new Date().getFullYear(), 0, first)
+        .toLocaleString()
+        .split(",")[0] +
+      " to " +
+      new Date(new Date().getFullYear(), 0, last).toLocaleString().split(",")[0]
+    );
   }
 
   return (
@@ -103,8 +123,8 @@ const AdminStudents = (props) => {
                     <td>
                       {element.en_name}, {element.cn_name}
                     </td>
-                    <td>{element.submit_time}</td>
-                    <td>{element.checkin_time}</td>
+                    <td>{element.submit_time ? convertTime(element.submit_time) : null}</td>
+                    <td>{element.checkin_time ? convertTime(element.checkin_time) : null}</td>
                     <td>
                       <div className="flex justify-center">
                         {element.fill_questionair ? (
