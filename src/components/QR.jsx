@@ -182,9 +182,9 @@ const QR = () => {
       return (
         <div className="flex flex-col items-left space-y-2">
           <DisplayTextAndQrCodeAfterSubmittedAndCheckin
-            ubmittedTime={submittedTime}
+            submit_time={submittedTime}
             student_id={student_id}
-            checkinTime={checkinTime}
+            checkin_time={checkinTime}
           />
         </div>
       );

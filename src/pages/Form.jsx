@@ -41,6 +41,7 @@ const Form = () => {
     setFilled(false);
     setSubmitted(false);
     setCheckinTime(null);
+    setSubmitted(null);
 
     if (first.trim() === "" || second.trim() === "") {
       setMsg("First Name and Last Name cannot be empty!");
