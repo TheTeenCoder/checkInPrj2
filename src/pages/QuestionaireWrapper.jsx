@@ -1,15 +1,16 @@
 import { useAtom } from 'jotai'
 import React from 'react'
-import { submittedTimeAtom } from '../atoms'
+import { checkinTimeAtom, submittedTimeAtom } from '../atoms'
 import Questionaire from '../components/Questionaire'
 
 const QuestionaireWrapper = (props) => {
 
-  const hook = useAtom(submittedTimeAtom)
+  const submittedTimeHook = useAtom(submittedTimeAtom)
+  const checkinTimeHook = useAtom(checkinTimeAtom)
 
   return (
     <div>
-      <Questionaire student_id={props.student_id} hook={hook} />
+      <Questionaire student_id={props.student_id} submittedTimeHook={submittedTimeHook} checkinTimeHook={checkinTimeHook} />
     </div>
   )
 }

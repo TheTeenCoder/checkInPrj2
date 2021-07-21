@@ -81,8 +81,11 @@ class Questionaire extends React.Component {
           QR: true,
           questionaire_id: body.questionair_id,
         });
-        const [,setHook] = this.props.hook;
-        setHook(body.submit_time)
+        const [,setSubmitTime] = this.props.submittedTimeHook;
+        const [,setCheckinTime] = this.props.checkinTimeHook;
+
+        setCheckinTime(body.checkin_time);
+        setSubmitTime(body.submit_time)
         const { history } = this.props; 
         history.push(`/userqr/${this.state.questionaire_id}`);
       });
