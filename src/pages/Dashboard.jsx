@@ -14,6 +14,7 @@ import {
   lastNameAtom,
   submittedAtom,
 } from "../atoms/index";
+import QuestionaireWrapper from "./QuestionaireWrapper";
 
 const Dashboard = () => {
   const [firstName] = useAtom(firstNameAtom);
@@ -38,7 +39,7 @@ const Dashboard = () => {
           </div>
           <ClassList classes={classes} />
           <hr />
-          <Questionaire student_id={id} />{" "}
+          <QuestionaireWrapper student_id={id} />{" "}
         </div>
       ) : null}
     </div>

@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import QRCode from "qrcode.react";
 import { withRouter } from "react-router-dom";
+import { submittedTimeAtom, checkinTimeAtom } from "../atoms/index";
 
 import {
   FormControl,
@@ -9,6 +10,7 @@ import {
   Radio,
   FormControlLabel,
 } from "@material-ui/core";
+
 class Questionaire extends React.Component {
   constructor(props) {
     super(props);
@@ -39,6 +41,7 @@ class Questionaire extends React.Component {
     });
   }
 
+  
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state.student_id);
@@ -78,8 +81,9 @@ class Questionaire extends React.Component {
           QR: true,
           questionaire_id: body.questionair_id,
         });
-
-        const { history } = this.props;
+        const [,setHook] = this.props.hook;
+        setHook(body.submit_time)
+        const { history } = this.props; 
         history.push(`/userqr/${this.state.questionaire_id}`);
       });
   }
